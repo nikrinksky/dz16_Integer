@@ -1,17 +1,20 @@
 package pro.sky;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class IntegerListImpl implements IntegerList {
-    private final Integer[] storage;
+    private  Integer[] storage;
     private int size;
 
+
     public IntegerListImpl() {
-        storage = new Integer[10];
+        this.storage = new Integer[10];
     }
 
     public IntegerListImpl(int initSize) {
-        storage = new Integer[initSize];
+        this.storage = new Integer[initSize];
+        this.size = 0;
     }
 
     @Override
@@ -28,6 +31,10 @@ public class IntegerListImpl implements IntegerList {
         validateSize();
         validateItem(item);
         validateIndex(index);
+
+        if (size >= storage.length) {
+            grow();
+        }
 
         if (index == size) {
             storage[size++] = item;
@@ -237,5 +244,32 @@ private void quickSort(Integer[] arr) {
         arr[right] = temp;
     }
 
+    private void grow() {
+        Integer[] storage = new Integer[(int) (this.storage.length * 1.5)];
+        System.arraycopy(this.storage, 0,  storage, 0, this.storage.length);
+        this.storage = storage;
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IntegerListImpl that = (IntegerListImpl) o;
+        return size == that.size && Arrays.equals(storage, that.storage);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(size);
+        result = 31 * result + Arrays.hashCode(storage);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "IntegerListImpl{" +
+                "storage=" + Arrays.toString(storage) +
+                ", size=" + size +
+                '}';
+    }
 }

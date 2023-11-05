@@ -15,10 +15,20 @@ class IntegerListImplTest {
 
     @Test
     void add() {
-        Integer expected = integerList.add(1);
+//        Integer expected = integerList.add(1);
+//
+//        Integer actual = 1;
 
-        Integer actual = 1;
-        assertEquals(expected, actual);
+        integerList.add(1);
+        integerList.add(2);
+
+        IntegerListImpl actual = new IntegerListImpl(10);
+        actual.add(1);
+        actual.add(2);
+
+        assertEquals(integerList, actual);
+        System.out.println("integerList" + integerList);
+        System.out.println("actual" + actual);
 
     }
 
@@ -41,7 +51,7 @@ class IntegerListImplTest {
     @Test
     void remove() {
         integerList.add(1);
-        Integer expected = integerList.remove(1);
+        Integer expected = integerList.remove(0);
 
         Integer actual = 1;
         assertEquals(expected, actual);
